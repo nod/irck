@@ -1,4 +1,4 @@
-package slackbridge
+package irck
 
 import (
     "fmt"
@@ -6,7 +6,6 @@ import (
     "os"
     "time"
 
-    "github.com/nod/irck/event"
     "github.com/nlopes/slack"
 )
 
@@ -15,11 +14,11 @@ type slackConfig struct {
     token string
 }
 
-func Config(channel string, token string) (slackConfig) {
+func SlackBridgeConfig(channel string, token string) (slackConfig) {
     return slackConfig{channel,token}
 }
 
-func RunSlackLoop(slackCfg slackConfig, evtChan chan event.Event) {
+func RunSlackLoop(slackCfg slackConfig, evtChan chan Event) {
     sapi := slack.New(
         slackCfg.token,
 		slack.OptionDebug(true),
@@ -44,7 +43,7 @@ func RunSlackLoop(slackCfg slackConfig, evtChan chan event.Event) {
                 rtm.NewOutgoingMessage("slackbridge online", slackCfg.channel) )
         case *slack.MessageEvent:
             fmt.Printf("Message: %v\n", ev)
-            ee := event.Make("sl", "ev", "slacky", time.Now())
+            ee := MakeEvent("sl", "ev", "slacky", time.Now())
             fmt.Printf("ee: %s\n", ee.Body)
             // chans,_ := sapi.GetChannels(true)
         case *slack.PresenceChangeEvent:

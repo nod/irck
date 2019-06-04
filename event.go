@@ -1,9 +1,8 @@
-package event
+package irck
 
 import (
     "time"
 )
-
 
 type Event struct {
     Origin string
@@ -20,6 +19,6 @@ func ParseISOTime(isots string) time.Time {
     return t
 }
 
-func Make(origin string, body string, author string, ts time.Time) Event {
+func MakeEvent(origin string, body string, author string, ts time.Time) Event {
     return Event{origin, body, author, ts}
 }

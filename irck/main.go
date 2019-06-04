@@ -14,17 +14,10 @@ import (
     "time"
 
     "github.com/thoj/go-ircevent"
-    "github.com/nod/irck/slackbridge"
-    "github.com/nod/irck/event"
+    ik "github.com/nod/irck"
 )
 
-var ircChan = make(chan event.Event, 32)
-
-type irckEvent struct {
-    origin string
-    body string
-    author string
-}
+var ircChan = make(chan ik.Event, 32)
 
 type ircConfig struct {
     channel string // if doesnt start with # then direct nick
@@ -37,8 +30,8 @@ type ircConfig struct {
 
 var ircCfg = ircConfig{}
 
-func runIrcLoop(irccon *irc.Connection, c chan event.Event) {
-    var ev event.Event
+func runIrcLoop(irccon *irc.Connection, c chan ik.Event) {
+    var ev ik.Event
     for {
         select {
         case ev = <-c:
@@ -94,8 +87,8 @@ func main() {
     fmt.Println("gencfg.slacktok", gencfg.slacktoken)
     fmt.Println("gencfg.slackchan", gencfg.slackchan)
 
-    slackCfg := slackbridge.Config(gencfg.slackchan, gencfg.slacktoken)
+    slackCfg := ik.SlackBridgeConfig(gencfg.slackchan, gencfg.slacktoken)
     // go runIrc(ircCfg)
-    slackbridge.RunSlackLoop(slackCfg, ircChan)
+    ik.RunSlackLoop(slackCfg, ircChan)
 }
 

@@ -3,8 +3,7 @@
 ## note on building
 
 ```
-dep ensure
-go build
+make
 ```
 
 ## usage
