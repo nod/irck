@@ -1,3 +1,10 @@
+
+# WARNING non functioning right now don't use this probably won't even build.
+
+Seriously.  This is broken.  Don't use it.
+
+
+
 # irc to slack and back
 
 ## note on building
